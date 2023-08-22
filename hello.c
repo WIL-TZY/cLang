@@ -7,7 +7,7 @@
 /* GLOSSÁRIO DE COMANDOS
 gcc hello.c -------------------------------> Faz a compilação
 gcc -o hello.out --------------------------> Transfere o conteúdo compilado p/ um arquivo de output
-./ hello.out ------------------------------> Roda o programa compilado
+./hello.out ------------------------------> Roda o programa compilado
 gcc hello.c -o hello.out && ./hello.out ---> Junção de comandos p/ compilar e rodar o programa
 
 ---- Como compilar projetos modulares (ou seja, um projeto com múltiplos arquivos) ---- 
@@ -21,19 +21,58 @@ Isso resulta em um executável chamado "demo", que você pode rodar com o comand
 
 // Função main --- Ponto de entrada do programa
 int main() {
-    printf("Hello, World!\n");
+    printf("Hello, World!\n\n\n");
 
-    // É necessário deixar espaço suficiente p/ entrada do nome
+    /*
     char nome[10] = "";
     printf("Qual é o seu nome?\n");
     scanf("%s", nome);
     printf("Olá, %s!\n", nome);
+    */
 
+    /*
     int n;
     printf("Digite um inteiro positivo: ");
     scanf("%d", &n);
     printf("A soma dos primeiros inteiros positivos é %d\n", soma(n));
     printf("O produto dos primeiros inteiros positivos é %d\n", fatorial(n));
+    */
+
+    // Jogo Adivinha
+    int tentativas;
+    int numero;
+    int sorteio = 42;
+
+    printf("Bem-vindo(a) ao jogo de adivinhação!\n");
+    printf("Digite o número de tentativas:\n");
+    scanf("%d", &tentativas);
+    printf("Tente adivinhar o número sorteado pelo programa.\n");
+
+    while (tentativas > 0) {
+ 
+        printf("\nDigite um número de 0-100:\n");
+        scanf("%d", &numero);
+
+        if (numero == sorteio) {
+            printf("\nVocê acertou!\n\n");
+            tentativas = -1;
+        }
+        else {
+            if (numero > sorteio) {
+                printf("O número sorteado é menor.\n");
+                tentativas--;
+            }
+            else {
+                printf("O número sorteado é maior.\n");
+                tentativas--;
+            }
+        }
+    }
+
+    if (tentativas == 0) {
+        printf("\nVocê perdeu...\n");        
+    }
+
 
     return 0;
 }
