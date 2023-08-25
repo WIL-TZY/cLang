@@ -21,22 +21,43 @@ Isso resulta em um executável chamado "demo", que você pode rodar com o comand
 
 // Função main --- Ponto de entrada do programa
 int main() {
-    printf("Hello, World!\n\n\n");
+    printf("Hello, World!\n\n");
 
-    /*
+    
     char nome[10] = "";
-    printf("Qual é o seu nome?\n");
+    printf("Olá! Qual é o seu nome?\n");
     scanf("%s", nome);
-    printf("Olá, %s!\n", nome);
-    */
+    printf("Olá, %s!\n\n", nome);
 
-    /*
+    /* Usando as funções de help.c
     int n;
     printf("Digite um inteiro positivo: ");
     scanf("%d", &n);
     printf("A soma dos primeiros inteiros positivos é %d\n", soma(n));
     printf("O produto dos primeiros inteiros positivos é %d\n", fatorial(n));
     */
+
+   // Exercício dos bovinos
+    int bovinos = 10;
+    int quantidadeDeBovinos;
+    int anos;
+
+    printf("Digite a quantidade de bovinos que você quer no final:\n");
+    scanf("%d", &quantidadeDeBovinos);
+
+    for (anos = 0; bovinos <= quantidadeDeBovinos; anos ++) {
+        printf("%d\n", bovinos);
+        int bovinosNascidos = quantidadeDeBovinos / 3;
+        int bovinosMortos = quantidadeDeBovinos / 4;
+    
+        bovinos = (bovinos + bovinosNascidos - bovinosMortos);
+    }
+
+    printf("Bovinos %d, Anos %d \n", quantidadeDeBovinos, anos);
+
+    //printf("Vão levar %d anos para atingir uma população de %d bovinos\n", anos, previsao);
+
+
 
     // Jogo Adivinha
     int tentativas;
@@ -71,8 +92,7 @@ int main() {
 
     if (tentativas == 0) {
         printf("\nVocê perdeu...\n");        
-    }
-
+    } 
 
     return 0;
 }
