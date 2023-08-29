@@ -29,13 +29,13 @@ int main() {
     scanf("%s", nome);
     printf("Olá, %s!\n\n", nome);
 
-    /* Usando as funções de help.c
+    /* Usando as funções de help.c */
     int n;
     printf("Digite um inteiro positivo: ");
     scanf("%d", &n);
     printf("A soma dos primeiros inteiros positivos é %d\n", soma(n));
     printf("O produto dos primeiros inteiros positivos é %d\n", fatorial(n));
-    */
+    
 
     return 0;
 }
