@@ -1,14 +1,15 @@
 #include <stdio.h>
 
 // Headers
-int depositar(int saldo);
-int sacar(int saldo);
+float depositar(float saldo);
+float sacar(float saldo);
 
 int main() {
     float saldo = 0, sair = 0, temConta = 0;
     char escolha[1], nome[10] = "";
 
     printf("Bem vindo(a) ao banco.\n");
+    printf("\n");
 
     while (sair != 1) {
         printf("1 - Abrir conta\n2 - Depósito\n3 - Saque\n4 - Saldo\n5 - Sair\n\n");
@@ -27,7 +28,8 @@ int main() {
                 printf("Para abrir uma conta, digite seu nome: \n");
                 scanf("%s", nome);
                 printf("Certo, %s. Informe agora um valor inicial de depósito para ser o seu saldo: \n", nome);
-                scanf("%d", &saldo);
+                scanf("%f", &saldo);
+                printf("\n");
                 temConta = 1;
             }
             else if ((escolha[0] == '2' || escolha[0] == '3' || escolha[0] == '4') && sair == 0) {
@@ -41,18 +43,19 @@ int main() {
             }
             if (escolha[0] == '2') {
                 saldo = depositar(saldo);
+                printf("Operação de depósito efetuada.\n");
+                printf("\n");
             }
 
             if (escolha[0] == '3') {
                 saldo = sacar(saldo);
+                printf("Operação de saque efetuada.\n");
+                printf("\n");
             }
 
             if (escolha[0] == '4') {
-                printf("Seu saldo é: R$%d,00\n\n", saldo);
+                printf("%s, seu saldo é: R$%.2f\n\n", nome, saldo);
             }
-
-            // Roda depois de tentar qualquer uma das escolhas
-            printf("%s, seu saldo é: R$%d,00\n\n", nome, saldo);
         }
 
         if (escolha[0] == '5') {
@@ -69,18 +72,18 @@ int main() {
     return 0;
 }
 
-int depositar(int saldo) {
-    int deposito;
+float depositar(float saldo) {
+    float deposito;
     printf("Digite uma valor a ser depositado: ");
-    scanf("%d", &deposito);
+    scanf("%f", &deposito);
     saldo = saldo + deposito;
     return saldo;
 }
 
-int sacar(int saldo) {
-    int saque;
+float sacar(float saldo) {
+    float saque;
     printf("Digite uma valor a ser sacado: ");
-    scanf("%d", &saque);
+    scanf("%f", &saque);
     saldo = saldo - saque;
     return saldo;
 }
