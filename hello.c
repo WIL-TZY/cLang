@@ -19,7 +19,7 @@ gcc -o demo hello.o help.o -lm
 Isso resulta em um executável chamado "demo", que você pode rodar com o comando: ./demo
 */
 
-// Função main --- Ponto de entrada do programa
+// Função main --- Ponto de entrada e codigo que dirige o programa (driver code)
 int main() {
     printf("Hello, World!\n\n");
 
