@@ -1,6 +1,7 @@
 // Inclusão de bibliotecas - Deve ser feita logo no início
 #include <stdio.h>
 #include "help.h" 
+
 // Os símbolos de menor ou maior (<>) indicam ao compilador para procurar no diretório "include" do sistema pela biblioteca "stdio.h" 
 // Já as aspas duplas ("") dizem ao compilador para procurar no mesmo diretório que o arquivo fonte
 
@@ -17,6 +18,50 @@ gcc -Wall -g -c help.c  -------------------> Cria um objeto do arquivo help.c
 Em seguida você precisa vincular os dois arquivos ".o" resultantes em um único programa executável. Você pode fazer isso usando a opção -o do compilador:
 gcc -o demo hello.o help.o -lm
 Isso resulta em um executável chamado "demo", que você pode rodar com o comando: ./demo
+*/
+
+/* CÓDIGOS DE FORMATAÇÃO */
+/*
+%c ---------------- char 
+Lê um caractere. 
+Exemplo: 
+    char letra;
+    scanf(“%c”, letra);
+
+%s ---------------- string 
+Lê uma string. 
+Exemplo:
+    char nome[20];
+    scanf(“%s”, nome);
+
+%hd ---------------- short 
+Lê um short int 
+Exemplo:
+    short num;
+    scanf(“%hd”, &num);
+
+%d ---------------- int 
+Lê um inteiro 
+    int num;
+    scanf(“%d”, &num);
+
+%ld ---------------- long 
+Lê um long int 
+Exemplo:
+    long num;
+    scanf(“%ld”, &num);
+
+%f ---------------- float 
+Lê um float 
+Exemplo:
+    float num;
+    scanf(“%f”, &num);
+
+%lf ---------------- double 
+Lê um double 
+Exemplo:
+    double num;
+    scanf(“%lf”, &num);
 */
 
 // Função main --- Ponto de entrada e codigo que dirige o programa (driver code)
