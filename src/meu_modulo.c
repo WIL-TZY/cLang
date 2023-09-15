@@ -1,4 +1,8 @@
-#include "help.h"
+// Módulos devem ser compilados em arquivos de objetos (.o) para depois serem transformados em programas
+// Comando para transformar em objetos:
+// gcc -c arquivo.c -o objetos/arquivo.o
+
+
 
 int soma(int n) {
   int i;
