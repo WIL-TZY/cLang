@@ -1,9 +1,21 @@
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
+// Cabeçalhos
+void exercicio1();
+void exercicio2();
 void limpaBuffer();
 
 int main() {
-/*  Implemente um programa de calculadora que ofereça as seguintes opções:
+    //exercicio1();
+    exercicio2();
+    
+    return 0;
+}
+
+void exercicio1() {
+    /*  Implemente um programa de calculadora que ofereça as seguintes opções:
     a. Soma (+)
     b. Subtração (-)
     c. Multiplicação (*)
@@ -18,24 +30,25 @@ int main() {
     int contador = 0;
     
     printf("###### Calculadora ######\n\n");
-    printf("Escolha uma operação:\n");
-    printf("a. Soma (+)\n");
-    printf("b. Subtração (-)\n");
-    printf("c. Multiplicação (*)\n");
-    printf("d. Divisão (/)\n");
-    printf("e. Média Ponderada (MP)\n");
-    printf("f. Sair\n");
+    printf("Operações disponíveis:\n");
+    printf("  Soma (+)\n");
+    printf("  Subtração (-)\n");
+    printf("  Multiplicação (*)\n");
+    printf("  Divisão (/)\n");
+    printf("  Média Ponderada (%%)\n");
+    printf("  Sair (s)\n");
     
     while (1) {
+        printf("\nDigite qual operação deseja fazer: ");
         operacao = getchar();
         
-        if (operacao == 'f') {
+        if (operacao == 's') {
             break;
         }
 
         limpaBuffer();
         
-        if (operacao == 'a' || operacao == 'b' || operacao == 'c' || operacao == 'd') {
+        if (operacao == '+' || operacao == '-' || operacao == '*' || operacao == '/') {
             float numero1, numero2;
             printf("Digite o primeiro número: ");
             scanf("%f", &numero1);
@@ -43,22 +56,24 @@ int main() {
             printf("Digite o segundo número: ");
             scanf("%f", &numero2);
             
-            if (operacao == 'a') {
+            if (operacao == '+') {
                 resultado = numero1 + numero2;
-            } else if (operacao == 'b') {
+            } else if (operacao == '-') {
                 resultado = numero1 - numero2;
-            } else if (operacao == 'c') {
+            } else if (operacao == '*') {
                 resultado = numero1 * numero2;
-            } else if (operacao == 'd') {
+            } else if (operacao == '/') {
                 if (numero2 != 0) {
                     resultado = numero1 / numero2;
                 } else {
-                    printf("Erro: Divisão por zero!\n");
+                    printf("Erro: Não se pode fazer divisão por zero!\n");
                 }
             }
             
+            // Todas as operações acima irão imprimir esta linha
             printf("Resultado: %.2f\n", resultado);
-        } else if (operacao == 'e') {
+
+        } else if (operacao == '%') {
             float nota1, nota2, peso1, peso2;
             printf("Digite a primeira nota: ");
             scanf("%f", &nota1);
@@ -86,11 +101,44 @@ int main() {
     }
     
     printf("Programa encerrado.\n");
-    
-    return 0;
 }
 
-void limpaBuffer(){
+void exercicio2() {
+/*
+    Implemente uma função que verifica se uma senha fornecida pelo usuário é válida. 
+    A senha deve ter pelo menos 8 caracteres e conter pelo menos uma letra maiúscula,
+    uma letra minúscula e um número. 
+    A função deve retornar 1 se a senha for válida e 0 caso contrário. 
+    (Estudar a biblioteca ctype.h que contém funções para ajudar nesse exercício)
+*/
+    char senha[20];
+    // Inicializando todos os índices da string com '\0' (caractere nulo)
+    memset(senha, '\0', sizeof(senha));
+
+    printf("** SENHA **\n");
+    printf("Crie sua senha.\n");
+    printf("Ela deve conter pelo menos: \n");
+    printf("- 8 caractereres.\n");
+    printf("- Letra maiúscula.\n");
+    printf("- Letra minúscula.\n");
+    printf("- Um número.\n");
+
+    // while(1) {
+
+    // }
+
+    printf("Senha: ");
+    scanf("%s", senha);
+
+    printf("[DEBUG] senha: %s\n", senha); // DEBUG
+    
+    for (int i = 0; i < sizeof(senha); i++) {
+        printf("a"); // DEBUG
+    }
+
+}
+
+void limpaBuffer() {
     int c;
     // Limpa o buffer até que encontre um caracter de quebra de linha ou o final do arquivo (EOF), 
     // garantindo que qualquer entrada pendente seja descartada

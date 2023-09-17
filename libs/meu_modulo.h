@@ -1,4 +1,4 @@
-// Esse é um arquivo header
+// Esse é um arquivo header (arquivo de cabeçalho)
 // Headers (arquivos .h) são usado em conjunto com arquivos C (.c) para incluir a declaração de variáveis, constantes ou funções
 // Essas declarações criam protótipos dessas variáveis, constantes ou funções
 

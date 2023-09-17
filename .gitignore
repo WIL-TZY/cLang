@@ -2,3 +2,9 @@
 # Dessa forma os diretorios aparecem vazios no repositorio
 /output/*
 /obj/*
+
+# Ignorar todos os arquivos na pasta .vscode
+.vscode/*
+
+# Exceto o arquivo settings.json
+!.vscode/settings.json

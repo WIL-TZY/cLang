@@ -1,8 +1,8 @@
 // Inclusão de bibliotecas - Deve ser feita logo no início
-#include <stdio.h>
+#include <stdio.h> // ----> Biblioteca padrão de input/output
 #include "../libs/meu_modulo.h"
-#include <string.h>
-#include <locale.h>
+#include <string.h> // ----> P/ manipulação de strings
+#include <locale.h> // ----> Permite utilizar caracteres latinos
 // Os símbolos de menor ou maior (<>) indicam ao compilador para procurar no diretório "include" do sistema pela biblioteca "stdio.h" 
 // Já as aspas duplas ("") dizem ao compilador para procurar no mesmo diretório que o arquivo fonte
 
@@ -129,7 +129,7 @@ Na linguagem C, os símbolos de formatação são especificadores de formato usa
 // Função main --- Ponto de entrada e codigo que dirige o programa (driver code)
 int main() {
     // Chamada de função para permitir utilizar caracteres latinos
-    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "portuguese");
 
     // IMPRIMIR NO CONSOLE
     printf("Hello, World!\n");
