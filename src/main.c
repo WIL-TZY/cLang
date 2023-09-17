@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "../libs/meu_modulo.h"
 #include <string.h>
-
+#include <locale.h>
 // Os símbolos de menor ou maior (<>) indicam ao compilador para procurar no diretório "include" do sistema pela biblioteca "stdio.h" 
 // Já as aspas duplas ("") dizem ao compilador para procurar no mesmo diretório que o arquivo fonte
 
@@ -128,6 +128,9 @@ Na linguagem C, os símbolos de formatação são especificadores de formato usa
 
 // Função main --- Ponto de entrada e codigo que dirige o programa (driver code)
 int main() {
+    // Chamada de função para permitir utilizar caracteres latinos
+    setlocale(LC_ALL, "Portuguese");
+
     // IMPRIMIR NO CONSOLE
     printf("Hello, World!\n");
 
@@ -141,7 +144,7 @@ int main() {
     scanf("%d", &idade);
     printf("\n Sua idade é: %d.", idade);
 
-    // CONDITIONAL STATEMENTS
+    // CONDICIONAIS
     if (idade >= 18) {
         printf("Você é adulto.\n");
     } else {

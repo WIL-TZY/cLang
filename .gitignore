@@ -1,4 +1,4 @@
 # Ignora arquivos contidos nessas pastas, sem ignorar as pastas
-# Dessa forma os diretórios aparecerão vazios no repositório
+# Dessa forma os diretorios aparecem vazios no repositorio
 /output/*
 /obj/*
