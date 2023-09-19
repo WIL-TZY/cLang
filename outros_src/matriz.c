@@ -44,6 +44,12 @@ int main() {
 
     printf("\n");
 
+    /*
+        ERRATA: Seria melhor usar size_t pro tamanho ao invés de int
+        size_t é um tipo definido como grande o suficiente para representar o tamanho de qualquer objeto escrito em C. 
+        Os outros tipos, não. Nada impede de usar int se quiser, mas é uma opção que pode levar a bugs.
+        Portanto, para armazenar o tamanho de um objeto, o ideal é usar size_t.
+    */
     int tamanho = sizeof(matriz) / sizeof(matriz[0]);
     printf("Tamanho da matriz: %d\n", tamanho);
     printf("\n");

@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 #include <math.h> 
+#include <locale.h>
 /* 
 Nota: Ao adicionar a lib padrão de matemática (libm/math.h), é necessário usar o comando -lm na hora da compilação 
 Dessa forma: gcc lista1.c -o output/lista1.out -lm  && ./output/lista1.out
@@ -25,7 +27,7 @@ void exercicio11();
 void exercicio12();
 
 int main() {
-
+    setlocale(LC_ALL, "portuguese");
     exercicio1();
     exercicio2();
     exercicio3();
@@ -51,7 +53,23 @@ void exercicio1() {
     int idade;
 
     printf("Digite seu nome: ");
-    scanf("%s", nome);
+
+    // Usando fgets(...) ao invés de scanf("%s", nome) para conseguir pegar nomes compostos
+    fgets(nome, sizeof(nome), stdin);
+    // Trocando caracter de quebra de linha pelo terminador de string 
+    nome[strcspn(nome, "\n")] = '\0';
+
+    /* Uma outra forma de fazer poderia ser com getchar():
+        int c;
+        int i = 0;
+        while ((c = getchar()) != '\n' && c != EOF) {
+        if (i < sizeof(nome) - 1) {
+            nome[i++] = c;
+        }
+    }
+
+    nome[i] = '\0'; // Adicione o terminador de string
+    */
 
     printf("Digite sua idade: ");
     scanf("%d", &idade);

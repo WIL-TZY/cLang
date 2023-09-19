@@ -9,7 +9,9 @@
         "tuple": "c",
         "type_traits": "c",
         "utility": "c",
-        "locale.h": "c"
+        "locale.h": "c",
+        "string_view": "c",
+        "initializer_list": "c"
     },
     // "C_Cpp.errorSquiggles": "disabled"
 }

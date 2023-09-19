@@ -127,6 +127,34 @@ Na linguagem C, os símbolos de formatação são especificadores de formato usa
 */
 
 // Função main --- Ponto de entrada e codigo que dirige o programa (driver code)
+/*
+    Parâmetros do main() :
+    int main(int argc, char *argv[])
+
+    Esses parâmetros não precisam ser fornecidos pelo programador ao chamar a função main(). 
+    Em vez disso, esses argumentos são adicionados pelo sistema operacional quando o programa é iniciado.
+
+    int argc: 
+    É o número de argumentos da linha de comando fornecidos quando o programa é executado, incluindo o nome do programa. 
+    O nome do programa em si é considerado o primeiro argumento. 
+    Portanto, argc é sempre pelo menos 1.
+
+    char *argv[]: 
+    É um array de strings (um array de ponteiros para caracteres) que contém os argumentos da linha de comando como strings. 
+    argv[0] contém o nome do programa, argv[1] contém o primeiro argumento, argv[2] contém o segundo argumento e assim por diante.
+
+    Logo, se você executar um programa chamado "meuprograma" da seguinte maneira:
+    ./meuprograma arg1 arg2 arg3
+    argc será igual a 4 (o nome do programa mais três argumentos).
+    - argv[0] será uma string contendo "meuprograma".
+    - argv[1] será uma string contendo "arg1".
+    - argv[2] será uma string contendo "arg2".
+    - argv[3] será uma string contendo "arg3".
+
+    Esses argumentos da linha de comando podem ser usados para que o programa responda a diferentes entradas ou execute tarefas específicas com base nos argumentos fornecidos. 
+    No entanto, eles não são fornecidos explicitamente na chamada da função main(), somente no terminal.
+    O sistema operacional automaticamente os preenche uma vez que você roda o programa.
+*/
 int main() {
     // Chamada de função para permitir utilizar caracteres latinos
     setlocale(LC_ALL, "portuguese");
