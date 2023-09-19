@@ -88,6 +88,21 @@ int main() {
     printf("Tamanho usando sizeof: %zu\n", tamanho1); // OUTPUT: Tamanho usando sizeof: 6
     printf("Comprimento usando strlen: %zu\n", tamanho2); // OUTPUT: Comprimento usando strlen: 5
 
+    // Arrays de char 
+    char primeiraString[20];
+    primeiraString[0] = 'O';
+    primeiraString[1] = 'I';
+    primeiraString[2] = '!';
+    //primeiraString[11] = '\0';
+
+    char segundaString[10];
+    segundaString[0] = 'X';
+    segundaString[1] = 'Y';
+    segundaString[2] = 'Z';
+    //segundaString[3] = '\0';
+
+    printf("String1: %s, String2: %s\n", primeiraString, segundaString);
+
     return 0;
 }
 
