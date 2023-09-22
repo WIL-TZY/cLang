@@ -76,18 +76,18 @@ int main() {
 // Recriando strcmp()
 
 int ehIgual(char *s1, char *s2) {
-  int counter = 0;
+  int contador = 0;
   int diferente = 0;
 
 
-  while (*(s1 + counter) != '\0') {
-     if (*(s1 + counter) != *(s2 + counter)) {
+  while (*(s1 + contador) != '\0') {
+     if (*(s1 + contador) != *(s2 + contador)) {
        diferente = 1;
   }
-     counter++;
+     contador++;
   }
 
-  if (*(s2 + counter) != '\0') {
+  if (*(s2 + contador) != '\0') {
     diferente = 1;
   }
 

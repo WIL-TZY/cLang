@@ -61,19 +61,19 @@ int main() {
 
     for (int i = 0; i < 10; i++) {
         if (i == 5) {
-            break; // Exits the loop when i reaches 5
+            break; // Pula fora do loop quando i for igual a 5
         }
     }
 
     for (int i = 0; i < 5; i++) {
     if (i == 2) {
-        continue; // Skips the iteration when i is 2
+        continue; // Salta pra fora da iteração se i for igual a 2
     }
     printf("i = %d\n", i);
 
     for (int i = 0; i < 5; i++) {
         if (i == 3) {
-            goto endLoop; // Jumps to the labeled statement
+            goto endLoop; // Salta para o rótulo
         }
     }
     endLoop:
