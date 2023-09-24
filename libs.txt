@@ -1,0 +1,6 @@
+stdio.h     --------> Necessário p/ usar printf() e scanf().
+stdlib.h    --------> Necessária p/ utilizar várias funções muito úteis, como: malloc(), realloc(), free(), srand(), rand(), etc.
+string.h    --------> Necessária p/ utilizar funções de manipulação de strings.
+locale.h    --------> Necessária p/ adição de caracteres latinos (ISO8959).
+math.h      --------> Necessária p/ usar funções como pow() e sqrt().
+time.h      --------> Necessária p/ usar a função time().

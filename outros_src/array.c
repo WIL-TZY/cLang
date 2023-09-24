@@ -69,6 +69,17 @@ int main() {
     */
     // Cada elemento nomes[i] representa uma string, e você pode acessar e manipular essas strings como desejar
     char nomes[10][50]; // Declara um array de 10 strings, cada uma com espaço para 49 caracteres e um caractere nulo de terminação.
+    /* IMPORTANTE!
+    Por que preciso usar strcpy? Não posso só fazer:
+    nomes[0] = "Alice";
+    nomes[1] = "Joaquim";
+    nomes[2] = "Matheus";
+
+    Não é possível atribuir diretamente uma string literal (como "Alice", "Joaquim" ou "Matheus") a um array de caracteres usando a sintaxe de atribuição simples. 
+    Isso ocorre porque uma string literal é, na verdade, um ponteiro constante para uma sequência de caracteres e não pode ser tratada como um array de caracteres que pode ser modificado.
+        
+    Por conta disso, é necessário usar a função strcpy() da biblioteca string.h para adicionar valores (nesse caso, string literals) em cada índice do array.
+    */
     // Preenchendo alguns elementos do array com nomes usando a função strcpy()
     strcpy(nomes[0], "Alice");
     strcpy(nomes[1], "Joaquim");
