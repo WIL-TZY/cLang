@@ -126,6 +126,20 @@ Na linguagem C, os símbolos de formatação são especificadores de formato usa
 |   |-- .vscode
 */
 
+// Macros
+/*
+    Macro é uma sequência de código que é definida por um nome e pode ser substituída por essa sequência de código em tempo de compilação. 
+    São geralmente criados usando a diretiva #define.
+    Devem ser definidos fora da função main, e possuem escopo global neste arquivo.
+    A convenção é usar letras maiúsculas.
+    Alguns usos comuns de macros:
+    - Criar atalhos;
+    - Substituir valores constantes;
+    -  Gerar código repetitivo de maneira mais conveniente.
+*/
+#define PI 3.14159265359
+#define RAIZ_QUADRADA_DE(x) ((x) * (x))
+
 // Função main --- Ponto de entrada e codigo que dirige o programa (driver code)
 /*
     Parâmetros do main() :
@@ -164,13 +178,20 @@ int main() {
 
     // VARIÁVEIS
     int idade = 25;
-    float pi = 3.14159;
+    float decimal = 5.3283;
     char turma = 'A';
 
     // ENTRADA NO CONSOLE
     printf("Digite sua idade: ");
     scanf("%d", &idade);
-    printf("\n Sua idade é: %d.", idade);
+    printf("Sua idade é: %d.\n", idade);
+
+    // PRINTANDO UM MACRO
+    double pi = PI;
+    printf("O valor de pi é: %.5lf\n", pi);
+    int num = 5;
+    int resultado = RAIZ_QUADRADA_DE(5); // Isso é substituído por int resultado = ((5) * (5));
+    printf("A raiz quadrada de %d é: %d\n", num, resultado);
 
     // CONDICIONAIS
     if (idade >= 18) {
@@ -189,9 +210,26 @@ int main() {
         idade++;
     }
 
-    // ARRAYS
-    int numeros[5] = {1, 2, 3, 4, 5};
-    printf("Primeiro elemento: %d\n", numeros[0]);
+    // ARRAYS (1D) --- VETORES
+    // Quando iniciados dessa forma, pode deixar o índice vazio ou atribuir um valor que servirá como seu tamanho, como por exemplo numeros[5] = {1, 2, 3, 4, 5};
+    //Se nada for atribuído, o próprio compilador irá determinar o tamanho necessário durante a execução do programa
+    int arr1d_numeros[] = {1, 2, 3, 4, 5}; 
+    printf("Primeiro elemento: %d\n", arr1d_numeros[0]);
+
+    // ARRAYS (2D) --- MATRIZES
+    int arr2d_numeros[4][2] = {
+        {1, 2},
+        {3, 4},
+        {5, 6},
+        {7, 8}
+    };
+    printf("Elemento posicionado na linha 2 e coluna 1: %d\n", arr2d_numeros[2][1]);
+    // Na declaração acima, arr2d_numeros é uma matriz bidimensional com 4 linhas e 2 colunas. 
+    // Os elementos podem ser acessados usando a notação [linha][coluna], como arr2d_numeros[2][1] para acessar o valor 6.
+    /* OBS: 
+        Importante lembrar que arrays se iniciam no índice 0, não no índice 1. 
+        Portanto, a "linha 2" é na verdade a "linha 3" e a "coluna 1" é a "coluna 2".
+    */
 
     // FUNÇÕES
     // Funções devem ser definidas fora do escopo do main()
@@ -205,7 +243,7 @@ int main() {
         }
     */
    
-    // STRUCTS (Estruturas)
+    // STRUCTS (ESTRUTURAS)
     // Exemplo 1 - Usando palavra-chave "struct"
     struct Ponto {
         int x;
@@ -227,38 +265,85 @@ int main() {
     pessoa1.idade = 30;
 
     // PONTEIROS
-    int valor = 42;
+    /*
+        Ponteiros são variáveis que armazenam endereços de memória de outras variáveis. 
+        Os ponteiros permitem que você acesse e manipule dados indiretamente, acessando a memória onde os dados estão armazenados.
+        Alguns usos comuns de ponteiros incluem:
+        - Alocação dinâmica de memória;
+        - Passagem de argumentos por referência para funções;
+        - Criação de estruturas de dados complexas;
+        - Etc.
+                                    -- GLOSSÁRIO --
+        - Endereço de Memória: 
+            Cada variável em um programa C ou C++ é armazenada em uma posição de memória com um endereço único. 
+            Os ponteiros armazenam esses endereços de memória.
+        - Variáveis de Ponteiro: 
+            Uma variável de ponteiro é uma variável que pode armazenar um endereço de memória. 
+            Em C, você declara uma variável de ponteiro usando o símbolo '*'.
+            Mas cuidado, pois esse símbolo adquire outro significado uma vez que você declara um ponteiro.
+            Depois de declarada, você pode usar o símbolo '*' como um operador.
+
+                                -- OPERADORES DE PONTEIRO --
+        - Operador de Endereço (&): 
+            O operador '&' é usado para obter o endereço de memória de uma variável existente.
+        - Operador de Desreferência (*): 
+        O operador '*' é usado para acessar o valor armazenado em um endereço de memória apontado por um ponteiro.
+
+        Ponteiros fornecem um alto grau de controle e flexibilidade ao programa, mas também podem ser propensos a erros se não forem usados com cuidado.
+    */
+    int valor = 50;
     int *ptr = &valor;
-    printf("Valor: %d\n", *ptr);
+    printf("Valor armazenado no ponteiro: %d\n", *ptr);                 // OUTPUT: 50
+    printf("Endereço armazenado no ponteiro (%%p & *ptr): %p\n", *ptr); // OUTPUT: 0000000000000032 ----> 50 convertido para hexadecimal (pois a formatação %p espera um endereço de memória)
+    printf("Endereço armazenado no ponteiro (%%p & ptr): %p\n", ptr);   // OUTPUT: Um número hexadecimal que é gerado dinamicamente a cada execução
+    printf("Endereço de memória da variável 'valor': %p\n", &valor);    // OUTPUT: O mesmo número hexadecimal gerado acima
+    printf("Endereço de memória do próprio ponteiro: %p\n", &ptr);      // OUTPUT: Outro número hexadecimal, dessa vez é o endereço do próprio ponteiro, e não o endereço que ele armazena
 
-
-    //-------------------------
-
-    char nome[10] = "";
-    printf("Olá! Qual é o seu nome?\n");
-    scanf("%s", nome);
-    printf("Olá, %s!\n\n", nome);
+    //-------------------------//
 
     /* Usando as funções de meu_modulo.c */
     int n;
-    printf("Digite um inteiro positivo: ");
+    printf("\nDigite um inteiro positivo: ");
     scanf("%d", &n);
     printf("A soma dos primeiros inteiros positivos é %d\n", soma(n));
     printf("O produto dos primeiros inteiros positivos é %d\n", fatorial(n));
-    
 
     // EXTRA: Diferença entre %i e %d
-    int decimal = 42;               // Valor em base decimal
-    int octal = 052;                // Valor em base octal (52 em decimal)
-    int hexadecimal = 0x2A;         // Valor em base hexadecimal (42 em decimal)
+    printf("\n-- Testando diferentes sistemas de numeração --\n");
+    int base10 = 42;               // Valor em base decimal
+    int base8 = 052;                // Valor em base octal (52 em decimal)
+    int base16 = 0x2A;         // Valor em base hexadecimal (42 em decimal)
 
-    printf("%d\n", decimal);        // Imprime como decimal
-    printf("%i\n", decimal);        // Imprime como decimal
-    printf("%d\n", octal);          // Imprime como decimal (42 em decimal)
-    printf("%i\n", octal);          // Imprime como octal (052 em octal)
-    printf("%d\n", hexadecimal);    // Imprime como decimal (42 em decimal)
-    printf("%i\n", hexadecimal);    // Imprime como hexadecimal (2A em hexadecimal)
+    printf("%d\n", base10);        // Imprime como decimal
+    printf("%i\n", base10);        // Imprime como decimal
+    printf("%d\n", base8);          // Imprime como decimal (42 em decimal)
+    printf("%i\n", base8);          // Imprime como octal (052 em octal)
+    printf("%d\n", base16);    // Imprime como decimal (42 em decimal)
+    printf("%i\n", base16);    // Imprime como hexadecimal (2A em hexadecimal)
 
+    // NOTAÇÃO CIENTÍFICA EM C
+    /* 
+        Na linguagem C, você pode representar números em notação científica usando a letra 'E' ou 'e' para denotar a parte exponencial. 
+        Notação científica é útil para representar números muito grandes ou muito pequenos de forma mais concisa. 
+
+        Observe que o 'E' ou 'e' indica a potência de 10 pela qual o número base deve ser multiplicado (podendo ser potência positiva ou negativa). 
+        
+        Nesse exemplo, num * 1e6 será o mesmo que 25 * 1e6, que representa 25 multiplicado por 10 elevado à sexta potência (ou seja, 1000).
+
+        Exemplo: Suponha-se que você queira executar uma operação que arredonde um dado número para seis casas decimais.
+        num = 5;
+        double arrendondaNum = round(num * 1e6) / 1e6;
+
+        Especificamente, 1e6 representa o número 1 multiplicado por 10 elevado à potência de 6, que equivale a 1.000.000. 
+        Então, 1e6 é igual a 1.000.000. E num * 1e6 = 15.625.
+
+    */
+    printf("\nNotação Científica:\n");
+    double exemplo = 1.23e3; // Isso representa 1.23 * 10^3
+    printf("%lf\n", exemplo); // OUTPUT: 1230.000000
+
+    exemplo = 4.56E-2; // Isso representa 4.56 * 10^(-2)
+    printf("%lf\n", exemplo); // OUTPUT: 0.045600
 
     return 0;
 }

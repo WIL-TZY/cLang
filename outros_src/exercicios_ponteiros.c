@@ -31,31 +31,27 @@ double* lerDouble() {
 }
 
 char* lerString() {
-  char* string = NULL;
-  char c;
-  int cont = 0;
-  // ola!
-  // c = o | cont = 0 |
-  // c = l | cont = 1 |
-  // c = a | cont = 2 |
-  // c = ! | cont = 3 |
-  while ((c = getchar()) != '\n') {
-    /* NÃO FUNFA
-    *string = c;
-    string = string + cont; // string[0] = c
-    cont++;
-    */
-  }
+    int tamanho_max = 100;
+    int byte = sizeof(char);
+    char* string = (char*)malloc(tamanho_max * byte);
+    // Por segurança, para evitar falhas de malloc
+    if (string == NULL) {
+        exit(1);
+    }
+    char c;
+    int cont = 0;
+    // ex string: "ola!"
+    // c = o | cont = 0 |
+    // c = l | cont = 1 |
+    // c = a | cont = 2 |
+    // c = ! | cont = 3 |
+    while ((c = getchar()) != '\n' && cont < tamanho_max - 1) {
+        string[cont++] = c;
+    }
 
-  string = malloc(cont);
+    string[cont] = '\0'; // Adicionando '\0' no último índice
 
-  if (string == NULL) {
-     exit(1);
-  }
+    //fgets(string, 100, stdin);
 
-  fgets(string, 100, stdin);
-
-  return string;
+    return string;
 }
-
-
