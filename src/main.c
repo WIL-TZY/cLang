@@ -130,7 +130,7 @@ Na linguagem C, os símbolos de formatação são especificadores de formato usa
 /*
     Macro é uma sequência de código que é definida por um nome e pode ser substituída por essa sequência de código em tempo de compilação. 
     São geralmente criados usando a diretiva #define.
-    Devem ser definidos fora da função main, e possuem escopo global neste arquivo.
+    Devem ser definidos fora da função main, e possuem escopo global.
     A convenção é usar letras maiúsculas.
     Alguns usos comuns de macros:
     - Criar atalhos;
@@ -212,7 +212,8 @@ int main() {
 
     // ARRAYS (1D) --- VETORES
     // Quando iniciados dessa forma, pode deixar o índice vazio ou atribuir um valor que servirá como seu tamanho, como por exemplo numeros[5] = {1, 2, 3, 4, 5};
-    //Se nada for atribuído, o próprio compilador irá determinar o tamanho necessário durante a execução do programa
+    //Se nada for atribuído, o próprio compilador irá determinar o tamanho necessário durante a execução do programa.
+    // Nesse caso, o compilador leva em conta o tipo do array e aloca 5 * sizeof(int) bytes de memória para o array, onde sizeof(int) é 4 bytes para dados do tipo inteiro.
     int arr1d_numeros[] = {1, 2, 3, 4, 5}; 
     printf("Primeiro elemento: %d\n", arr1d_numeros[0]);
 
@@ -229,6 +230,60 @@ int main() {
     /* OBS: 
         Importante lembrar que arrays se iniciam no índice 0, não no índice 1. 
         Portanto, a "linha 2" é na verdade a "linha 3" e a "coluna 1" é a "coluna 2".
+    */
+
+    // STRINGS
+    /*
+    Em C, strings são sequências de caracteres que representam texto. Elas são usadas para armazenar e manipular palavras, frases e texto em geral.
+
+    Representação de Strings: 
+    As strings são representadas como arrays (ou ponteiros) de caracteres. Cada caractere em uma string é armazenado em um elemento do array. 
+    O último caractere de uma string é sempre o caractere nulo ('\0'), que indica o término da string.
+
+    Null-Terminated Strings: 
+    As strings em C são null-terminated, o que significa que elas terminam com o caractere nulo ('\0'). 
+    Esse caractere é usado para indicar o final da string, e todas as funções de manipulação de strings dependem desse caractere para determinar o comprimento e o fim da string.
+
+    Comprimento de uma String: 
+    O comprimento de uma string é determinado contando-se todos os caracteres desde o início da string até o caractere nulo ('\0'). 
+    A função strlen da biblioteca padrão de C é comumente usada para calcular o comprimento de uma string.
+    O tamanho real de uma string (incluindo '\0') pode ser denotado como: strlen() + 1. Ou utilizando a função sizeof().
+    */
+    // Formas de declarar uma string
+    // Observe que, ao declarar uma string como um array, o tamanho do array deve ser grande o suficiente para acomodar a string e o caractere nulo.
+    char nome[] = "Fulano"; // Uma string declarada como um array de caracteres -> O tamanho será automaticamente calculado pelo compilador
+    char sobrenome[10] = "De Tal"; // Uma string com tamanho fixo
+    char mensagem[100]; // Uma string vazia com tamanho fixo
+
+    // Você também pode criar strings de forma manual, sem ajuda do compilador. 
+    // Mas pra isso, precisa adicionar o caractere '\0' manualmente:
+    char string[4];  // Declara uma string com espaço para 4 caracteres
+    string[0] = 'O';
+    string[1] = 'I';
+    string[2] = '!';
+    string[3] = '\0';  // Certifique-se de adicionar o caractere nulo para indicar o fim da string
+    // Isso tudo é equivalente à: char string[] = "OI!";
+    /*
+    Funções de Manipulação de Strings: 
+    C fornece uma série de funções na biblioteca padrão (como strcpy, strcat, strcmp, strlen, entre outras) para manipular strings. 
+    Essas funções permitem copiar, concatenar, comparar e calcular o comprimento de strings.
+    Para usá-las no programa, basta importar a biblioteca <string.h>
+
+    Entrada e Saída de Strings: 
+    Para entrada e saída de strings, você pode usar funções como printf e scanf. 
+    O formato de entrada/saída '%s' é usado para strings.
+
+    Strings e Memória Dinâmica: 
+    Você também pode alocar memória dinamicamente para armazenar strings usando funções como malloc e realloc. 
+    Isso é útil quando você não sabe o tamanho da string antecipadamente.
+
+    Cuidado com Estouro de Buffer (segment fault error): 
+    Em C, não há verificação automática de estouro de buffer ao manipular strings. 
+    Isso significa que você deve ser cuidadoso ao copiar ou concatenar strings para garantir que não exceda os limites do buffer.
+
+    Strings Literals: 
+    Literais de string, como "Hello, World!", são sequências de caracteres constantes que são automaticamente null-terminated. 
+    Elas são armazenadas na memória de maneira especial e não devem ser modificadas.
     */
 
     // FUNÇÕES
@@ -268,6 +323,8 @@ int main() {
     /*
         Ponteiros são variáveis que armazenam endereços de memória de outras variáveis. 
         Os ponteiros permitem que você acesse e manipule dados indiretamente, acessando a memória onde os dados estão armazenados.
+        Tem um tamanho de 4 bytes em uma arquitetura 32bits, e 8 bytes em uma arquitetura 64bits.
+
         Alguns usos comuns de ponteiros incluem:
         - Alocação dinâmica de memória;
         - Passagem de argumentos por referência para funções;

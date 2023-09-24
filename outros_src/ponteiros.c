@@ -2,7 +2,8 @@
 #include <locale.h>
 
 // Um ponteiro é um tipo de dado
-// Ele ocupa 8 bytes de memória (ou 4bytes, dependendo do SO)
+// Em um sistema de 32 bits: Os ponteiros normalmente têm 4 bytes de tamanho.
+// Em um sistema de 64 bits: Os ponteiros normalmente têm 8 bytes de tamanho.
 
 // Cabeçalhos 
 int ehIgual(char *s1, char *s2);

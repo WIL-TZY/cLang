@@ -1,4 +1,6 @@
 #include <stdio.h>
+
+// Uma matriz é uma forma específica de array bidimensional, organizada em linhas e colunas.
 /*
 --------+--------+--------+--------+--------+
         |  Col1  |  Col2  |  Col3  |  Col4  |
