@@ -3,6 +3,14 @@
 #include <locale.h>
 #include <stddef.h> // ---> biblioteca usada p/ gerenciamento de ponteiros (inclui o tipo size_t)
 
+/* OBS: Caracter NUL ('\0')
+    O caractere NUL (geralmente escrito como '\0') é um caractere especial em C que representa o terminador nulo. 
+    É usado para marcar o final de uma string (uma matriz de caracteres).
+    O terminador nulo é um byte com valor zero (00000000), ou seja, todos os bits definidos como 0, e serve para monitorar o final de uma string.
+    Exemplo:
+    char string[10] = "Hello";  // 'H', 'e', 'l', 'l', 'o', '\0', (lixo), (lixo), (lixo), (lixo)
+*/
+
 // Cabeçalhos
 size_t strcspn_remade(const char *str, const char *reject);
 
@@ -22,7 +30,7 @@ int main() {
     // Para lidar com isso, pode-se usar a função strcspn()
     // strcspn() significa "string complementary span" pois ela procura caracteres não encontrados na string inicial, portanto, seu complemento
     // Ela serve para encontrar a primeira ocorrência de qualquer caractere em uma string que corresponda a um conjunto de caracteres especificado
-    // Essa linha está substituindo o caractere de nova linha ('\n') pelo terminador de string nulo ('\0')
+    // Essa linha está substituindo o caractere de nova linha ('\n') pelo terminador de string nulo ('\0' também chamado de 'NUL')
     // strcspn(nome, "\n") lê a string passada no 1° parâmetro até encontrar o índice que contem o valor "\n", e ao chegar nele, retorna sua posição
     nome[strcspn(nome, "\n")] = '\0';
     /*

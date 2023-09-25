@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <locale.h>
 
-// Um ponteiro é um tipo de dado
+// Um ponteiro é um tipo de dado.
 // Em um sistema de 32 bits: Os ponteiros normalmente têm 4 bytes de tamanho.
 // Em um sistema de 64 bits: Os ponteiros normalmente têm 8 bytes de tamanho.
+// Ponteiros são o único tipo de dado em C que podem ser inicializados como 'NULL' (nulo). OBS: Não confundir com o caractere 'NUL' ('\0')
+// Um ponteiro que é NULL representa um ponteiro não inicializado ou inválido.
 
 // Cabeçalhos 
 int ehIgual(char *s1, char *s2);
