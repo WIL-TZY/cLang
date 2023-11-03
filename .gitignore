@@ -7,5 +7,4 @@
 .vscode/*
 
 # Exceto o arquivo settings.json
-!.vscode/settings.json
 !.vscode/tasks.json
