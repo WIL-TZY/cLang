@@ -66,7 +66,7 @@ char* lerString(char* mensagem) {
   if (string == NULL) {
       exit(1);
   }
-   // Inicializando a string com um caractere nulo para evitar comportamento inesperado
+  // Inicializando a string com um caractere nulo para evitar comportamento inesperado
   string[0] = '\0';
 
   char c;
@@ -98,11 +98,12 @@ char* lerString(char* mensagem) {
 
   // ----------- DEBUG ----------- //
   //int tamanhoTotal = sizeof(string); // Sempre devolve 8 que é o tamanho de um ponteiro
+  //printf("\n[DEBUG] O tamanho do ponteiro: %d.\n", tamanhoTotal);
   tamanho = strlen(string);
   printf("String depois: %s\n", string);
   printf("\n[DEBUG] O tamanho da string: %d.\n", tamanho); // string = "ola!" ---> OUTPUT: 4
   printf("[DEBUG] O tamanho real da string (incluindo '\\0'): %d.\n", tamanho + 1); // string = "ola!" ---> OUTPUT: 5
-  //printf("\n[DEBUG] O tamanho do ponteiro: %d.\n", tamanhoTotal);
+
 
   return string;
 }
