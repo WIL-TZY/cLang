@@ -9,11 +9,12 @@
 // -------- Cabeçalhos -------- //
 void limpaBuffer();
 void limpaTela();
+void adicionaQuebra();
 void exibirMenu(struct tm *localTime);
 
 // --------- Structs ---------- //
 typedef struct {
-    int num;
+    int id;
     char nome[MAXIMO];
     char funcao[MAXIMO];
 } Pessoa;
@@ -37,7 +38,7 @@ int main() {
     // Declara um array de struct do tipo "Pessoa" contendo 2 instâncias
     Pessoa pessoa[2];
     // Contador
-    int qtdPessoas;
+    int qtdIntegrantes = 0, novosIntegrantes = 0, integrante = 0;
 
     /* ----------------------- LOOP PRINCIPAL ----------------------- */
     while(opcao != 0){ 
@@ -51,7 +52,7 @@ int main() {
         // limpaTela(); 
         
         // FUNÇÃO 1: Editar o nome do projeto
-        if (opcao == 1){
+        if (opcao == 1) {
             printf("Nome Atual do Projeto: %s\n\n", nomeProjeto);
             printf("Inserir novo nome? 1-Sim 2-Nao\n");
             scanf("%d", &sOuN);
@@ -72,41 +73,33 @@ int main() {
                 //limpaTela();
             }
         }
-        /*
-        // FUNÇÃO 2: Adicionar integrantes
-        if(opcao == 2){
-            printf("Quantos Integrantes Deseja Adicionar?\t");
-            scanf("%d", &qtdPessoas);
-            limpaBuffer();
-            limpaTela();
-            for(int k = 0; k < qtdPessoas; k++){
-
-            printf("Digite o nome do integrante: %d\n\n", k);
-            fgets(pessoa[k].nome, sizeof(pessoa[k].nome), stdin);
-
-            printf("Digite a funcao do integrante %d\n\n", k);
-            fgets(pessoa[k].funcao, sizeof(pessoa[k].funcao), stdin);
-
-            pessoa[k].num = k;
-            limpaTela();
-            }
-        }
-
-        if(opcao == 4){
-            printf("Numero\t\tNome\t\tFuncao\t\n");
-            for(int n = 0; n < qtdPessoas; n++){
-                printf("%d | nome: %s", pessoa[n].num, pessoa[n].nome);
-                printf("  | funcao: %s\n\n", pessoa[n].funcao);
-                //printf("%d\t %s%s", pessoa[n].num, pessoa[n].nome, pessoa[n].funcao);
-            
-            }
-            int voltar = 1;
-            printf("\nDigite 0 para voltar: ");
-            scanf("%d", &voltar);
-            limpaBuffer();
-            limpaTela();
-        }
         
+        // FUNÇÃO 2: Adicionar integrantes
+        if(opcao == 2) {
+            printf("Quantos Integrantes Deseja Adicionar? ");
+            scanf("%d", &novosIntegrantes);
+            // Adiciona novos integrantes a quantidade total de integrantes
+            qtdIntegrantes = qtdIntegrantes + novosIntegrantes;
+            // Reseta a variável
+            novosIntegrantes = 0;
+            limpaBuffer();
+            adicionaQuebra();
+            //limpaTela();
+            for(integrante = 0; integrante < qtdIntegrantes; integrante++){
+                printf("Digite o nome do integrante %d:\n", integrante + 1);
+                fgets(pessoa[integrante].nome, sizeof(pessoa[integrante].nome), stdin);
+                pessoa[integrante].nome[strcspn(pessoa[integrante].nome, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
+                adicionaQuebra();
+                printf("Digite a funcao do integrante %d:\n", integrante + 1);
+                fgets(pessoa[integrante].funcao, sizeof(pessoa[integrante].funcao), stdin);
+                pessoa[integrante].funcao[strcspn(pessoa[integrante].funcao, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
+                adicionaQuebra();
+                pessoa[integrante].id = integrante;
+                //limpaTela();
+            }
+        }
+
+        // FUNÇÃO 3: Remover integrantes
         int pot; // Número do cara que vai ser excluido
         char valorNulo[5] = "Null";
         int xot = 1;
@@ -115,8 +108,8 @@ int main() {
                 printf("Digite o numero do integrante a ser removido: ");
                 scanf("%d", &pot);
                 limpaBuffer();
-                for(int k = 0; k < qtdPessoas; k++){
-                    if(pot == pessoa[k].num){
+                for(int k = 0; k < qtdIntegrantes; k++){
+                    if(pot == pessoa[k].id){
                         strcpy(pessoa[k].nome, valorNulo);
                         strcpy(pessoa[k].funcao, valorNulo);
 
@@ -128,8 +121,24 @@ int main() {
                 limpaTela();
             }
         }
-        */
+
+        // FUNÇÃO 4: Visualizar integrantes
+        if(opcao == 4) {
+            adicionaQuebra();
+            printf("Numero   |     Nome              |          Funcao\n");
+            for (int integrante = 0; integrante < qtdIntegrantes; integrante++) {
+                printf("%-7d  |  %-19s  |  %-23s\n", pessoa[integrante].id, pessoa[integrante].nome, pessoa[integrante].funcao);            
+            }
+
+            int voltar = 1;
+            printf("\nDigite 0 para voltar: ");
+            scanf("%d", &voltar);
+            limpaBuffer();
+            //limpaTela();
+        }
     }
+    // ------------------ FIM DO PROGRAMA ------------------ //
+    adicionaQuebra();
     printf("\nPrograma Encerrado.\n");
 
     return 0;
@@ -143,6 +152,10 @@ void limpaTela() {
     system("cls");
 }
 
+void adicionaQuebra() {
+    printf("\n");
+}
+
 void exibirMenu(struct tm *localTime) {
     printf("#########################################################################################################\n");
         printf("#                                                                                                       #\n");
@@ -154,7 +167,7 @@ void exibirMenu(struct tm *localTime) {
         printf("#             2-Adicionar Integrante                                                                    #\n");
         printf("#             3-Remover Integrante                                                                      #\n");
         printf("#             4-Visualizar Integrantes                                                                  #\n");
-        printf("#             5-Adcionar Tarefas                                                                        #\n");
+        printf("#             5-Adicionar Tarefas                                                                       #\n");
         printf("#             6-Remover Tarefa                                                                          #\n");
         printf("#             7-Editar Tarefa                                                                           #\n");
         printf("#             8-Visualizar Andamento da Tarefa                                                          #\n");
