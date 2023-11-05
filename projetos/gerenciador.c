@@ -67,10 +67,7 @@ int main() {
 
                 // Adiciona o novo nome do projeto
                 strcpy(nomeProjeto, novoNome);
-
-                //limpaTela();
             } else if(sOuN == 0){
-                //limpaTela();
             }
         }
         
@@ -84,7 +81,6 @@ int main() {
             novosIntegrantes = 0;
             limpaBuffer();
             adicionaQuebra();
-            //limpaTela();
             for(integrante = 0; integrante < qtdIntegrantes; integrante++){
                 printf("Digite o nome do integrante %d:\n", integrante + 1);
                 fgets(pessoa[integrante].nome, sizeof(pessoa[integrante].nome), stdin);
@@ -95,30 +91,46 @@ int main() {
                 pessoa[integrante].funcao[strcspn(pessoa[integrante].funcao, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
                 adicionaQuebra();
                 pessoa[integrante].id = integrante;
-                //limpaTela();
             }
         }
 
         // FUNÇÃO 3: Remover integrantes
         int idExclusao; // Número do cara que vai ser excluido
         char valorNulo[5] = "Null";
-        int xot = 1;
+        sOuN = 1;
         if(opcao == 3){
-            while(xot == 1){ 
+            while(sOuN == 1){ 
+                // Validar a entrada para idExclusao verificando se scanf retorna 1 (indica que um inteiro foi lido com sucesso)
                 printf("Digite o numero do integrante a ser removido: ");
-                scanf("%d", &idExclusao);
-                limpaBuffer();
+                if (scanf("%d", &idExclusao) != 1) {
+                    printf("Entrada inválida. Digite um número válido.\n");
+                    limpaBuffer();
+                    continue;
+                }
+
+                // Verificar se idExclusao está dentro do intervalo válido de integrantes (0 a qtdIntegrantes - 1). 
+                if (idExclusao < 0 || idExclusao >= qtdIntegrantes) {
+                    printf("Integrante não encontrado. Digite um número válido.\n");
+                    limpaBuffer();
+                    continue;
+                }   
+
                 for(integrante = 0; integrante < qtdIntegrantes; integrante++){
                     if(idExclusao == pessoa[integrante].id){
                         strcpy(pessoa[integrante].nome, valorNulo);
                         strcpy(pessoa[integrante].funcao, valorNulo);
                     }
                 }
+                
                 adicionaQuebra();
-                // limpaTela();
+                
                 printf("Integrante Removido. Deseja remover mais algum? 1-Sim 2-Nao\n");
-                scanf("%d",&xot);
-                // limpaTela();
+                if (scanf("%d", &sOuN) != 1) {
+                    // Ao pedir ao usuário para escolher, validar novamente a entrada para garantir que seja ou 1 ou 2
+                    printf("Entrada inválida. Digite 1 para continuar ou 2 para sair.\n");
+                    limpaBuffer();
+                    continue;
+                }
             }
         }
 
@@ -132,11 +144,11 @@ int main() {
                 }          
             }
 
+            // Voltar para o menu principal
             int voltar = 1;
             printf("\nDigite 0 para voltar: ");
             scanf("%d", &voltar);
             limpaBuffer();
-            //limpaTela();
         }
     }
     // ------------------ FIM DO PROGRAMA ------------------ //
