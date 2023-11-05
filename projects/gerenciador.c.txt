@@ -1,0 +1,74 @@
+1-      const time_t currentTime = time(NULL);
+
+/*
+A variável currentTime é inicialmente declarada como sendo do tipo time_t.
+Esse é um tipo de dado que serve para representar valores relacionados a tempo,
+normalmente em segundos desde um ponto de referência conhecido como 'Time Epoch' (1970).
+A função time(NULL) retorna a hora atual como um valor time_t.
+A variável currentTime armazena a hora atual do relógio do sistema.
+Declarada como uma constante pois não há intenções de mudá-la, é uma boa prática.
+*/    
+
+
+2-     struct tm *localTime = localtime(&currentTime);
+
+/*
+Aqui cria-se um ponteiro para uma instância da struct tm (pertencente a biblioteca time.h) chamada localTime.
+
+A função localtime(), também da biblioteca time.h, foi projetada para retornar um ponteiro para 
+a struct tm que contém os componentes de data e hora do valor de tempo fornecido. 
+
+Ela pega um valor time_t (neste caso, currentTime) e o converte em uma estrutura do tipo struct tm. 
+Essa estrutura é preenchida com os componentes de data e hora correspondentes ao valor de hora fornecido 
+e um ponteiro para essa estrutura é armazenado na variável localTime.
+
+É mais eficiente retornar um ponteiro, especialmente ao lidar com grandes quantidades de dados de tempo. 
+Em vez de copiar toda a estrutura (que pode ser relativamente grande) para uma nova instância, ele retorna 
+um ponteiro para a estrutura existente, economizando memória e reduzindo a sobrecarga de cópia de dados.
+
+Em C, passar estruturas por valor (ou seja, copiar toda a estrutura) pode ser menos eficiente, especialmente 
+quando se trabalha com estruturas de dados complexas. 
+Portanto, retornar um ponteiro para a estrutura existente é uma abordagem comum para funções que precisam 
+trabalhar eficientemente com dados grandes ou complexos.
+
+O uso de um ponteiro também permite modificar os dados da estrutura se necessário, tornando-a mais versátil. 
+Assim é possível acessar e modificar os membros da struct tm por meio do ponteiro localTime, conforme necessário.
+*/
+
+3- printf(" %02d/%02d/20%02d \n", localTime->tm_mday, localTime->tm_mon + 1, localTime->tm_year - 100);
+
+/*
+Esta linha usa a função printf() para exibir a data e hora atuais em um formato específico. 
+Ela recupera os componentes de dia, mês e ano da estrutura localTime, ajusta-os se necessário e os exibe usando o formato especificado.
+Por exemplo, tm_mon é ajustado por 1 porque representa meses de 0 a 11.
+
+FORMATO DE DATA: dd/mm/yyyy
+
+%02d/%02d/20%02d \n": Esta é a format string (string de formatação) que especifica como os valores devem ser impressos. 
+'%' é um especificador de formato. 
+'/' é apenas um literal a ser impresso.
+    - %02d : 
+        Especificador de formato para um número inteiro (d). 
+        Isso significa que o argumento para este especificador deve ser impresso como um número inteiro com pelo menos 2 caracteres. 
+        Se o número inteiro tiver menos de 2 caracteres, zeros à esquerda serão adicionados para torná-lo com 2 caracteres. 
+        Isso geralmente é usado para formatar valores de dia e mês.
+
+    - 20%02d: 
+        Este é outro especificador de formato para um número inteiro, mas com uma formatação especial. 
+        Isso significa que o argumento deve ser impresso como um número inteiro com pelo menos 2 caracteres e “20” é prefixado ao número inteiro. 
+        Isso normalmente é usado para formatar os dois últimos dígitos do ano.
+
+    - localTime->tm_mday: 
+        Aqui, localTime é um ponteiro para uma estrutura tm.
+        O símbolo '->' é usado para acessar um membro de uma estrutura através de um ponteiro.
+        Portanto, 'localTime->tm_mday' acessa o dia do mês (tm_mday) a partir da estrutura tm apontada por localTime.
+
+    - localTime->tm_mon + 1: 
+        Aqui, 'tm_mon' representa o mês, mas é baseado em zero (0 para janeiro, 1 para fevereiro e assim por diante). Adicionar 1 ajusta-o para o intervalo 1-12.
+
+    - localTime->tm_year - 100: 
+        O campo 'tm_year' representa o número de anos desde 1900.
+        Subtrair 100 ajusta-o ao ano real.
+        Por exemplo, se tm_ano for 122, subtraia 100 resultados no ano de 2022 (1900 + 122).
+
+*/
