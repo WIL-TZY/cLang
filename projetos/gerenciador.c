@@ -6,11 +6,14 @@
 
 #define MAXIMO 30
 
+// Global que armazena o tempo atual
+struct tm *localTime;
+
 // -------- Cabeçalhos -------- //
 void limpaBuffer();
 void limpaTela();
 void adicionaQuebra();
-void exibirMenu(struct tm *localTime);
+void exibirMenu();
 
 // --------- Structs ---------- //
 typedef struct {
@@ -28,7 +31,7 @@ int main() {
     const time_t currentTime = time(NULL);
 
     // Ponteiro para struct tm - para facilitar a manipulação de componentes de data e hora
-    struct tm *localTime = localtime(&currentTime);
+    localTime = localtime(&currentTime);
     
     /*----------------------- Outras variáveis ---------------------- */
     int opcao = -1, sOuN = 0;
@@ -38,11 +41,11 @@ int main() {
     // Declara um array de struct do tipo "Pessoa" contendo 2 instâncias
     Pessoa pessoa[2];
     // Contador
-    int qtdIntegrantes = 0, novosIntegrantes = 0, integrante = 0;
+    int qtdIntegrantes = 0, qtdIntegrantesAnterior = 0, novosIntegrantes = 0, integrante = 0;
 
     /* ----------------------- LOOP PRINCIPAL ----------------------- */
     while(opcao != 0) { 
-        exibirMenu(localTime);
+        exibirMenu();
 
         // Usuário escolhe uma opção
         scanf("%d", &opcao);
@@ -64,6 +67,7 @@ int main() {
 
                 // Usuário escolhe um nome pro projeto
                 fgets(novoNome, sizeof(novoNome), stdin);
+                novoNome[strcspn(novoNome, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
 
                 // Adiciona o novo nome do projeto
                 strcpy(nomeProjeto, novoNome);
@@ -75,13 +79,22 @@ int main() {
         if(opcao == 2) {
             printf("Quantos Integrantes Deseja Adicionar? ");
             scanf("%d", &novosIntegrantes);
+
+            // Armazena o número anterior de integrantes
+            qtdIntegrantesAnterior = qtdIntegrantes;
+
             // Adiciona novos integrantes a quantidade total de integrantes
             qtdIntegrantes = qtdIntegrantes + novosIntegrantes;
+
             // Reseta a variável
             novosIntegrantes = 0;
+            
             limpaBuffer();
             adicionaQuebra();
-            for(integrante = 0; integrante < qtdIntegrantes; integrante++){
+
+            printf("Quantidade de integrantes: %d\n", qtdIntegrantes); // DEBUG
+
+            for(integrante = qtdIntegrantesAnterior; integrante < qtdIntegrantes; integrante++){
                 printf("Digite o nome do integrante %d:\n", integrante + 1);
                 fgets(pessoa[integrante].nome, sizeof(pessoa[integrante].nome), stdin);
                 pessoa[integrante].nome[strcspn(pessoa[integrante].nome, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
@@ -137,6 +150,7 @@ int main() {
         // FUNÇÃO 4: Visualizar integrantes
         if(opcao == 4) {
             adicionaQuebra();
+            printf("Quantidade de integrantes: %d\n", qtdIntegrantes); // DEBUG
             printf("Numero   |     Nome              |          Funcao\n");
             for (int integrante = 0; integrante < qtdIntegrantes; integrante++) {
                 if (strcmp(pessoa[integrante].nome, valorNulo) != 0) {
@@ -170,8 +184,8 @@ void adicionaQuebra() {
     printf("\n");
 }
 
-void exibirMenu(struct tm *localTime) {
-    printf("#########################################################################################################\n");
+void exibirMenu() {
+        printf("#########################################################################################################\n");
         printf("#                                                                                                       #\n");
         printf("#             Gerenciador de Projetos - UnDF                                                            #\n");
         printf("#                                                                                                       #\n");
@@ -190,6 +204,7 @@ void exibirMenu(struct tm *localTime) {
         printf("#                                                                                                       #\n");
         printf("#                                                 Brasilia, %02d/%02d/20%02d                                  #\n", localTime->tm_mday, localTime->tm_mon + 1, localTime->tm_year - 100);
         printf("#                                                                                                       #\n");
-        printf("#                                                                Desenvolvedores: Miguel                #\n");
+        printf("#                                                                Desenvolvedores: Miguel, Anael         #\n");
         printf("#########################################################################################################\n");
 }
+
