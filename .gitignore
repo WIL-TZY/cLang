@@ -2,6 +2,7 @@
 # Dessa forma os diretorios aparecem vazios no repositorio
 /output/*
 /obj/*
+/build/*
 
 # Ignorar todos os arquivos na pasta .vscode
 .vscode/*
