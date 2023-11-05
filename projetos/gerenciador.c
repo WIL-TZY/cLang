@@ -41,7 +41,7 @@ int main() {
     int qtdIntegrantes = 0, novosIntegrantes = 0, integrante = 0;
 
     /* ----------------------- LOOP PRINCIPAL ----------------------- */
-    while(opcao != 0){ 
+    while(opcao != 0) { 
         exibirMenu(localTime);
 
         // Usuário escolhe uma opção
@@ -100,25 +100,25 @@ int main() {
         }
 
         // FUNÇÃO 3: Remover integrantes
-        int pot; // Número do cara que vai ser excluido
+        int idExclusao; // Número do cara que vai ser excluido
         char valorNulo[5] = "Null";
         int xot = 1;
         if(opcao == 3){
             while(xot == 1){ 
                 printf("Digite o numero do integrante a ser removido: ");
-                scanf("%d", &pot);
+                scanf("%d", &idExclusao);
                 limpaBuffer();
-                for(int k = 0; k < qtdIntegrantes; k++){
-                    if(pot == pessoa[k].id){
-                        strcpy(pessoa[k].nome, valorNulo);
-                        strcpy(pessoa[k].funcao, valorNulo);
-
+                for(integrante = 0; integrante < qtdIntegrantes; integrante++){
+                    if(idExclusao == pessoa[integrante].id){
+                        strcpy(pessoa[integrante].nome, valorNulo);
+                        strcpy(pessoa[integrante].funcao, valorNulo);
                     }
                 }
-                limpaTela();
+                adicionaQuebra();
+                // limpaTela();
                 printf("Integrante Removido. Deseja remover mais algum? 1-Sim 2-Nao\n");
                 scanf("%d",&xot);
-                limpaTela();
+                // limpaTela();
             }
         }
 
@@ -127,7 +127,9 @@ int main() {
             adicionaQuebra();
             printf("Numero   |     Nome              |          Funcao\n");
             for (int integrante = 0; integrante < qtdIntegrantes; integrante++) {
-                printf("%-7d  |  %-19s  |  %-23s\n", pessoa[integrante].id, pessoa[integrante].nome, pessoa[integrante].funcao);            
+                if (strcmp(pessoa[integrante].nome, valorNulo) != 0) {
+                    printf("%-7d  |  %-19s  |  %-23s\n", pessoa[integrante].id, pessoa[integrante].nome, pessoa[integrante].funcao);  
+                }          
             }
 
             int voltar = 1;
