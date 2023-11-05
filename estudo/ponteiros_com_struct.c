@@ -80,8 +80,8 @@ int main() {
     // Aqui está o que acontece na prática:
     int resultado = *&ex1.x;
 
-    printf("Valor da variavel: %d\n", ex1.x);               // OUTPUT: x: 42
-    printf("Resultado após (*&ex1.x): %d\n", resultado);    // OUTPUT: resultado: 42
+    printf("Valor da variavel: %d\n", ex1.x);               // OUTPUT: Valor da variavel: 0
+    printf("Resultado após (*&ex1.x): %d\n", resultado);    // OUTPUT: Resultado após (*&ex1.x): 0
 
     return 0;
 }

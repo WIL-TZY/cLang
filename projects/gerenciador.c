@@ -4,15 +4,18 @@
 #include <time.h>
 #include <stdlib.h>
 
+#define MAXIMO 30
+
 // -------- Cabeçalhos -------- //
 void limpaBuffer();
 void limpaTela();
+void exibirMenu(struct tm *localTime);
 
 // --------- Structs ---------- //
 typedef struct {
     int num;
-    char nome[20];
-    char funcao[20];
+    char nome[MAXIMO];
+    char funcao[MAXIMO];
 } Pessoa;
 
 int main() {
@@ -28,58 +31,49 @@ int main() {
     
     /*----------------------- Outras variáveis ---------------------- */
     int opcao = -1, sOuN = 0;
-    char nomeProjeto[50] = "Meu Projeto 01";
-    char novoNome[50];
+    char nomeProjeto[MAXIMO] = "Meu Projeto 01";
+    char novoNome[MAXIMO];
 
-    // Criando duas structs do tipo "Pessoa"
+    // Declara um array de struct do tipo "Pessoa" contendo 2 instâncias
     Pessoa pessoa[2];
     // Contador
     int qtdPessoas;
 
     /* ----------------------- LOOP PRINCIPAL ----------------------- */
     while(opcao != 0){ 
-        printf("#########################################################################################################\n");
-        printf("#                                                                                                       #\n");
-        printf("#             Gerenciador de Projetos - UnDF                                                            #\n");
-        printf("#                                                                                                       #\n");
-        printf("#             Digite a opcao desejada:                                                                  #\n");
-        printf("#                                                                                                       #\n");
-        printf("#             1-Editar Nome do Projeto                                                                  #\n");
-        printf("#             2-Adicionar Integrante                                                                    #\n");
-        printf("#             3-Remover Integrante                                                                      #\n");
-        printf("#             4-Visualizar Integrantes                                                                  #\n");
-        printf("#             5-Adcionar Tarefas                                                                        #\n");
-        printf("#             6-Remover Tarefa                                                                          #\n");
-        printf("#             7-Editar Tarefa                                                                           #\n");
-        printf("#             8-Visualizar Andamento da Tarefa                                                          #\n");
-        printf("#                                                                                                       #\n");
-        printf("#             0-Sair                                                                                    #\n");
-        printf("#                                                                                                       #\n");
-        printf("#                                                 Brasilia, %02d/%02d/20%02d                                  #\n", localTime->tm_mday, localTime->tm_mon + 1, localTime->tm_year - 100);
-        printf("#                                                                                                       #\n");
-        printf("#                                                                Desenvolvedores: Miguel                #\n");
-        printf("#########################################################################################################\n");
+        exibirMenu(localTime);
+
+        // Usuário escolhe uma opção
         scanf("%d", &opcao);
         limpaBuffer();
-        limpaTela();
-        
 
+        // Limpa a tela quando uma opção é selecionada
+        // limpaTela(); 
+        
+        // FUNÇÃO 1: Editar o nome do projeto
         if (opcao == 1){
             printf("Nome Atual do Projeto: %s\n\n", nomeProjeto);
             printf("Inserir novo nome? 1-Sim 2-Nao\n");
             scanf("%d", &sOuN);
             limpaBuffer();
+            
+            // Subtela "Sim" / "Não"
             if(sOuN == 1){
                 printf("Digite o novo nome do Projeto:\n");
-                // scanf("%s", nomeProjeto);
-                fgets(nomeProjeto, sizeof(nomeProjeto), stdin);
-                // strcpy(nomeProjeto, novoNome);
-                limpaTela();
-            } else if(sOuN != 1){
-                limpaTela();
+
+                // Usuário escolhe um nome pro projeto
+                fgets(novoNome, sizeof(novoNome), stdin);
+
+                // Adiciona o novo nome do projeto
+                strcpy(nomeProjeto, novoNome);
+
+                //limpaTela();
+            } else if(sOuN == 0){
+                //limpaTela();
             }
         }
-
+        /*
+        // FUNÇÃO 2: Adicionar integrantes
         if(opcao == 2){
             printf("Quantos Integrantes Deseja Adicionar?\t");
             scanf("%d", &qtdPessoas);
@@ -113,29 +107,32 @@ int main() {
             limpaTela();
         }
         
-    int pot; // Número do cara que vai ser excluido
+        int pot; // Número do cara que vai ser excluido
         char valorNulo[5] = "Null";
         int xot = 1;
         if(opcao == 3){
-        while(xot == 1){ 
-            printf("Digite o numero do integrante a ser removido: ");
-            scanf("%d", &pot);
-            limpaBuffer();
-            for(int k = 0; k < qtdPessoas; k++){
-                if(pot == pessoa[k].num){
-                    strcpy(pessoa[k].nome, valorNulo);
-                    strcpy(pessoa[k].funcao, valorNulo);
+            while(xot == 1){ 
+                printf("Digite o numero do integrante a ser removido: ");
+                scanf("%d", &pot);
+                limpaBuffer();
+                for(int k = 0; k < qtdPessoas; k++){
+                    if(pot == pessoa[k].num){
+                        strcpy(pessoa[k].nome, valorNulo);
+                        strcpy(pessoa[k].funcao, valorNulo);
 
+                    }
                 }
+                limpaTela();
+                printf("Integrante Removido. Deseja remover mais algum? 1-Sim 2-Nao\n");
+                scanf("%d",&xot);
+                limpaTela();
             }
-            limpaTela();
-            printf("Integrante Removido. Deseja remover mais algum? 1-Sim 2-Nao\n");
-            scanf("%d",&xot);
-            limpaTela();
         }
-        }
+        */
     }
     printf("\nPrograma Encerrado.\n");
+
+    return 0;
 }
 
 void limpaBuffer() {
@@ -144,4 +141,28 @@ void limpaBuffer() {
 
 void limpaTela() {
     system("cls");
+}
+
+void exibirMenu(struct tm *localTime) {
+    printf("#########################################################################################################\n");
+        printf("#                                                                                                       #\n");
+        printf("#             Gerenciador de Projetos - UnDF                                                            #\n");
+        printf("#                                                                                                       #\n");
+        printf("#             Digite a opcao desejada:                                                                  #\n");
+        printf("#                                                                                                       #\n");
+        printf("#             1-Editar Nome do Projeto                                                                  #\n");
+        printf("#             2-Adicionar Integrante                                                                    #\n");
+        printf("#             3-Remover Integrante                                                                      #\n");
+        printf("#             4-Visualizar Integrantes                                                                  #\n");
+        printf("#             5-Adcionar Tarefas                                                                        #\n");
+        printf("#             6-Remover Tarefa                                                                          #\n");
+        printf("#             7-Editar Tarefa                                                                           #\n");
+        printf("#             8-Visualizar Andamento da Tarefa                                                          #\n");
+        printf("#                                                                                                       #\n");
+        printf("#             0-Sair                                                                                    #\n");
+        printf("#                                                                                                       #\n");
+        printf("#                                                 Brasilia, %02d/%02d/20%02d                                  #\n", localTime->tm_mday, localTime->tm_mon + 1, localTime->tm_year - 100);
+        printf("#                                                                                                       #\n");
+        printf("#                                                                Desenvolvedores: Miguel                #\n");
+        printf("#########################################################################################################\n");
 }
