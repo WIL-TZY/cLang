@@ -18,6 +18,7 @@ int main()
 
 	int n = 50;
 	int a = n;
+	// No caso de ponteiros, seu tipo na verdade deve ser igual ao tipo da variável para qual ele aponta
 	int *p = &n;
 
 	printf("n : %d\n", n);
