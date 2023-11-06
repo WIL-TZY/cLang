@@ -183,37 +183,71 @@ int main() {
 
         // FUNÇÃO 5: Adicionar tarefa
         if (opcao == 5) {
-            // Tarefa
-            printf("Digite o nome da tarefa: ");
-            fgets(tarefas[qtdTarefas].nome, sizeof(tarefas[qtdTarefas].nome), stdin);
-            tarefas[qtdTarefas].nome[strcspn(tarefas[qtdTarefas].nome, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
+            while(1) {
+                if (qtdTarefas < MAXIMO) {
+                    // Tarefa
+                    printf("Digite o nome da tarefa: ");
+                    fgets(tarefas[qtdTarefas].nome, sizeof(tarefas[qtdTarefas].nome), stdin);
+                    tarefas[qtdTarefas].nome[strcspn(tarefas[qtdTarefas].nome, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
 
-            int inserindoIntegrante = 1;
-            while(inserindoIntegrante) {
-                // Responsável pela tarefa
-                printf("Digite o nome do responsavel pela tarefa: ");
-                fgets(tarefas[qtdTarefas].responsavel, sizeof(tarefas[qtdTarefas].responsavel), stdin);
-                tarefas[qtdTarefas].responsavel[strcspn(tarefas[qtdTarefas].responsavel, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
+                    int inserindoIntegrante = 1;
+                    while(inserindoIntegrante) {
+                        // Responsável pela tarefa
+                        printf("Digite o nome do responsavel pela tarefa: ");
+                        fgets(tarefas[qtdTarefas].responsavel, sizeof(tarefas[qtdTarefas].responsavel), stdin);
+                        tarefas[qtdTarefas].responsavel[strcspn(tarefas[qtdTarefas].responsavel, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
 
-                int responsavelID = -1;
-                for (int i = 0; i < qtdIntegrantes; i++) {
-                    if (strcmp(pessoa[i].nome, tarefas[qtdTarefas].responsavel) == 0) {
-                        responsavelID = i;
+                        int responsavelID = -1;
+                        for (int i = 0; i < qtdIntegrantes; i++) {
+                            if (strcmp(pessoa[i].nome, tarefas[qtdTarefas].responsavel) == 0) {
+                                responsavelID = i;
+                                break;
+                            }
+                        }
+                        
+                        // Responsável não foi encontrando
+                        if (responsavelID == -1) {
+                            printf("Integrante nao encontrado, digite outro responsavel.\n");
+                            
+                            sOuN = 0;
+                            // Perguntar se o usuário quer adicionar outra tarefa
+                            printf("Deseja tentar novamente? 1-Sim 2-Não\n");
+                            scanf("%d", &sOuN);
+                            limpaBuffer();
+
+                            if (sOuN == 1) {
+                                // Volta pro loop de adicionar integrante
+                                limpaTela();
+                                continue;
+                            }
+                            else {
+                                limpaTela();
+                                break;
+                            }
+                            
+                        } else {
+                            // Tarefa adicionada com o ID do responsável encontrado
+                            tarefas[qtdTarefas].progresso = 0;
+                            tarefas[qtdTarefas].idTarefa = qtdTarefas;
+                            qtdTarefas++;
+                            printf("Tarefa adicionada com sucesso.\n");
+                            inserindoIntegrante = 0;
+                        }
+                    }
+
+                    sOuN = 0;
+                    // Perguntar se o usuário quer adicionar outra tarefa
+                    printf("Deseja adicionar outra tarefa? 1-Sim 2-Não\n");
+                    scanf("%d", &sOuN);
+                    limpaBuffer();
+
+                    if (sOuN != 1) {
+                        // Sai do loop de adicionar tarefas
                         break;
                     }
                 }
-                
-                // Responsável não foi encontrando
-                if (responsavelID == -1) {
-                    printf("Integrante nao encontrado, digite outro responsavel.\n");
-                    limpaTela();
-                    continue;
-                } else {
-                    // Tarefa adicionada com o ID do responsável encontrado
-                    tarefas[qtdTarefas].progresso = 0;
-                    tarefas[qtdTarefas].idTarefa = qtdTarefas;
-                    qtdTarefas++;
-                    printf("Tarefa adicionada com sucesso.\n");
+                else {
+                    printf("Limite máximo de tarefas atingido.\n");
                     break;
                 }
             }
