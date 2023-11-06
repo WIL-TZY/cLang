@@ -22,6 +22,13 @@ typedef struct {
     char funcao[MAXIMO];
 } Pessoa;
 
+typedef struct {
+    int idTarefa;
+    char nome[MAXIMO];
+    char responsavel[MAXIMO]; // Nome da pessoa responsável
+    int progresso;   // Progresso da tarefa em porcentagem (inicialmente 0%)
+} Tarefa;
+
 int main() {
     setlocale(LC_ALL,"Portuguese_Brazil");
     
@@ -38,11 +45,12 @@ int main() {
     char nomeProjeto[MAXIMO] = "Meu Projeto 01";
     char novoNome[MAXIMO];
 
-    // Declara um array de struct do tipo "Pessoa" contendo 3 instâncias (0, 1, 2)
-    Pessoa pessoa[MAXIMO];
+    // Inicializando instâncias das structs
+    Pessoa pessoa[MAXIMO]; 
+    Tarefa tarefas[MAXIMO]; 
 
-    // Contador
     int qtdIntegrantes = 0, qtdIntegrantesAnterior = 0, novosIntegrantes = 0, integrante = 0;
+    int qtdTarefas = 0;
 
     /* ----------------------- LOOP PRINCIPAL ----------------------- */
     while(opcao != 0) { 
@@ -172,7 +180,65 @@ int main() {
             limpaBuffer();
             limpaTela();
         }
-    }
+
+        // FUNÇÃO 5: Adicionar tarefa
+        if (opcao == 5) {
+            // Tarefa
+            printf("Digite o nome da tarefa: ");
+            fgets(tarefas[qtdTarefas].nome, sizeof(tarefas[qtdTarefas].nome), stdin);
+            tarefas[qtdTarefas].nome[strcspn(tarefas[qtdTarefas].nome, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
+
+            int inserindoIntegrante = 1;
+            while(inserindoIntegrante) {
+                // Responsável pela tarefa
+                printf("Digite o nome do responsavel pela tarefa: ");
+                fgets(tarefas[qtdTarefas].responsavel, sizeof(tarefas[qtdTarefas].responsavel), stdin);
+                tarefas[qtdTarefas].responsavel[strcspn(tarefas[qtdTarefas].responsavel, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
+
+                int responsavelID = -1;
+                for (int i = 0; i < qtdIntegrantes; i++) {
+                    if (strcmp(pessoa[i].nome, tarefas[qtdTarefas].responsavel) == 0) {
+                        responsavelID = i;
+                        break;
+                    }
+                }
+                
+                // Responsável não foi encontrando
+                if (responsavelID == -1) {
+                    printf("Integrante nao encontrado, digite outro responsavel.\n");
+                    limpaTela();
+                    continue;
+                } else {
+                    // Tarefa adicionada com o ID do responsável encontrado
+                    tarefas[qtdTarefas].progresso = 0;
+                    tarefas[qtdTarefas].idTarefa = qtdTarefas;
+                    qtdTarefas++;
+                    printf("Tarefa adicionada com sucesso.\n");
+                    break;
+                }
+            }
+        }
+
+        // FUNÇÃO 8: Visualizar andamento do projeto
+        if (opcao == 8) {
+            printf("Visualizar Andamento do Projeto:\n\n");
+            printf("Numero   |     Nome da Tarefa              |     Responsavel         |     Progresso\n");
+            adicionaQuebra();
+            for (int tarefa = 0; tarefa < qtdTarefas; tarefa++) {
+                if (strcmp(tarefas[tarefa].nome, valorNulo) != 0) {
+                    printf("%-8d |  %-30s |  %-23s |  %d%%\n", tarefas[tarefa].idTarefa, tarefas[tarefa].nome, tarefas[tarefa].responsavel, tarefas[tarefa].progresso);
+                }   
+            }
+
+            // Voltar para o menu principal
+            int voltar = 1;
+            printf("\nDigite 0 para voltar: ");
+            scanf("%d", &voltar);
+            limpaBuffer();
+            limpaTela();
+        }
+        // FIM DO LOOP PRINCIPAL
+    } 
     // ------------------ FIM DO PROGRAMA ------------------ //
     adicionaQuebra();
     printf("\nPrograma Encerrado.\n");
@@ -185,7 +251,8 @@ void limpaBuffer() {
 }
 
 void limpaTela() {
-    printf("\033[H\033[J"); // Código ANSI para limpar a tela
+    // Código ANSI para limpar a tela
+    printf("\033[H\033[J");
 }
 
 void adicionaQuebra() {
