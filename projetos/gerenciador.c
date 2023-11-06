@@ -38,8 +38,9 @@ int main() {
     char nomeProjeto[MAXIMO] = "Meu Projeto 01";
     char novoNome[MAXIMO];
 
-    // Declara um array de struct do tipo "Pessoa" contendo 2 instâncias
-    Pessoa pessoa[2];
+    // Declara um array de struct do tipo "Pessoa" contendo 3 instâncias (0, 1, 2)
+    Pessoa pessoa[MAXIMO];
+
     // Contador
     int qtdIntegrantes = 0, qtdIntegrantesAnterior = 0, novosIntegrantes = 0, integrante = 0;
 
@@ -52,7 +53,7 @@ int main() {
         limpaBuffer();
 
         // Limpa a tela quando uma opção é selecionada
-        // limpaTela(); 
+        limpaTela(); 
         
         // FUNÇÃO 1: Editar o nome do projeto
         if (opcao == 1) {
@@ -60,9 +61,10 @@ int main() {
             printf("Inserir novo nome? 1-Sim 2-Nao\n");
             scanf("%d", &sOuN);
             limpaBuffer();
+            limpaTela();
             
             // Subtela "Sim" / "Não"
-            if(sOuN == 1){
+            if(sOuN == 1) {
                 printf("Digite o novo nome do Projeto:\n");
 
                 // Usuário escolhe um nome pro projeto
@@ -71,7 +73,10 @@ int main() {
 
                 // Adiciona o novo nome do projeto
                 strcpy(nomeProjeto, novoNome);
+
+                limpaTela();
             } else if(sOuN == 0){
+                limpaTela();
             }
         }
         
@@ -90,20 +95,21 @@ int main() {
             novosIntegrantes = 0;
             
             limpaBuffer();
-            adicionaQuebra();
+            limpaTela();
 
-            printf("Quantidade de integrantes: %d\n", qtdIntegrantes); // DEBUG
+            //printf("Quantidade de integrantes: %d\n", qtdIntegrantes); // DEBUG
 
             for(integrante = qtdIntegrantesAnterior; integrante < qtdIntegrantes; integrante++){
-                printf("Digite o nome do integrante %d:\n", integrante + 1);
+                printf("Digite o nome do integrante %d:\n", integrante);
                 fgets(pessoa[integrante].nome, sizeof(pessoa[integrante].nome), stdin);
                 pessoa[integrante].nome[strcspn(pessoa[integrante].nome, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
                 adicionaQuebra();
-                printf("Digite a funcao do integrante %d:\n", integrante + 1);
+                printf("Digite a funcao do integrante %d:\n", integrante);
                 fgets(pessoa[integrante].funcao, sizeof(pessoa[integrante].funcao), stdin);
                 pessoa[integrante].funcao[strcspn(pessoa[integrante].funcao, "\n")] = '\0';  // Remove o '\n' adicionado na hora do "Enter"
                 adicionaQuebra();
                 pessoa[integrante].id = integrante;
+                limpaTela();
             }
         }
 
@@ -135,8 +141,7 @@ int main() {
                     }
                 }
                 
-                adicionaQuebra();
-                
+                limpaTela();
                 printf("Integrante Removido. Deseja remover mais algum? 1-Sim 2-Nao\n");
                 if (scanf("%d", &sOuN) != 1) {
                     // Ao pedir ao usuário para escolher, validar novamente a entrada para garantir que seja ou 1 ou 2
@@ -144,13 +149,15 @@ int main() {
                     limpaBuffer();
                     continue;
                 }
+                limpaTela();
             }
         }
 
         // FUNÇÃO 4: Visualizar integrantes
         if(opcao == 4) {
             adicionaQuebra();
-            printf("Quantidade de integrantes: %d\n", qtdIntegrantes); // DEBUG
+            //printf("Quantidade de integrantes: %d\n", qtdIntegrantes); // DEBUG
+
             printf("Numero   |     Nome              |          Funcao\n");
             for (int integrante = 0; integrante < qtdIntegrantes; integrante++) {
                 if (strcmp(pessoa[integrante].nome, valorNulo) != 0) {
@@ -163,6 +170,7 @@ int main() {
             printf("\nDigite 0 para voltar: ");
             scanf("%d", &voltar);
             limpaBuffer();
+            limpaTela();
         }
     }
     // ------------------ FIM DO PROGRAMA ------------------ //
@@ -177,7 +185,7 @@ void limpaBuffer() {
 }
 
 void limpaTela() {
-    system("cls");
+    printf("\033[H\033[J"); // Código ANSI para limpar a tela
 }
 
 void adicionaQuebra() {
