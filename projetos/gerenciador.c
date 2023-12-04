@@ -15,12 +15,23 @@ void limpaTela();
 void adicionaQuebra();
 void exibirMenu();
 
-// --------- Structs ---------- //
 typedef struct {
     int id;
     char nome[MAXIMO];
     char funcao[MAXIMO];
 } Pessoa;
+
+enum OpcoesMenu {
+    EDITAR_NOME_PROJETO = 1,
+    ADICIONAR_INTEGRANTE,
+    REMOVER_INTEGRANTE,
+    VISUALIZAR_INTEGRANTES,
+    ADICIONAR_TAREFA,
+    REMOVER_TAREFA,
+    EDITAR_TAREFA,
+    VISUALIZAR_ANDAMENTO_PROJETO,
+    SAIR = 0
+};
 
 typedef struct {
     int idTarefa;
@@ -53,7 +64,7 @@ int main() {
     int qtdTarefas = 0;
 
     /* ----------------------- LOOP PRINCIPAL ----------------------- */
-    while(opcao != 0) { 
+    while(opcao != SAIR) { 
         exibirMenu();
 
         // Usuário escolhe uma opção
@@ -64,7 +75,7 @@ int main() {
         limpaTela(); 
         
         // FUNÇÃO 1: Editar o nome do projeto
-        if (opcao == 1) {
+        if (opcao == EDITAR_NOME_PROJETO) {
             printf("Nome Atual do Projeto: %s\n\n", nomeProjeto);
             printf("Inserir novo nome? 1-Sim 2-Nao\n");
             scanf("%d", &sOuN);
@@ -89,7 +100,7 @@ int main() {
         }
         
         // FUNÇÃO 2: Adicionar integrantes
-        if(opcao == 2) {
+        if(opcao == ADICIONAR_INTEGRANTE) {
             printf("Quantos Integrantes Deseja Adicionar? ");
             scanf("%d", &novosIntegrantes);
 
@@ -125,7 +136,7 @@ int main() {
         int idExclusao; // Número do cara que vai ser excluido
         char valorNulo[5] = "Null";
         sOuN = 1;
-        if(opcao == 3){
+        if(opcao == REMOVER_INTEGRANTE){
             while(sOuN == 1){ 
                 // Validar a entrada para idExclusao verificando se scanf retorna 1 (indica que um inteiro foi lido com sucesso)
                 printf("Digite o numero do integrante a ser removido: ");
@@ -162,7 +173,7 @@ int main() {
         }
 
         // FUNÇÃO 4: Visualizar integrantes
-        if(opcao == 4) {
+        if(opcao == VISUALIZAR_INTEGRANTES) {
             adicionaQuebra();
             //printf("Quantidade de integrantes: %d\n", qtdIntegrantes); // DEBUG
 
@@ -182,7 +193,7 @@ int main() {
         }
 
         // FUNÇÃO 5: Adicionar tarefa
-        if (opcao == 5) {
+        if (opcao == ADICIONAR_TAREFA) {
             while(1) {
                 if (qtdTarefas < MAXIMO) {
                     // Tarefa
@@ -253,10 +264,76 @@ int main() {
             }
         }
 
+    // FUNÇÃO 6: Remover tarefa
+    if (opcao == REMOVER_TAREFA) {
+        int numeroTarefa;
+        printf("Digite o número da tarefa que deseja remover: ");
+        scanf("%d", &numeroTarefa);
+        limpaBuffer();
+
+        // Verificar se o número da tarefa é válido
+        if (numeroTarefa >= 0 && numeroTarefa < qtdTarefas) {
+            // Remover a tarefa e reorganizar os números das tarefas
+            for (int i = numeroTarefa; i < qtdTarefas - 1; i++) {
+                tarefas[i] = tarefas[i + 1];
+                tarefas[i].idTarefa = i;
+            }
+            qtdTarefas--;
+
+            printf("Tarefa removida com sucesso.\n");
+        } else {
+            printf("Número de tarefa inválido.\n");
+        }
+
+        limpaTela();
+    }
+
+    // FUNÇÃO 7: Editar tarefa
+    if (opcao == EDITAR_TAREFA) {
+        int numeroTarefa;
+        printf("Digite o número da tarefa que deseja editar: ");
+        scanf("%d", &numeroTarefa);
+        limpaBuffer();
+
+        // Verificar se o número da tarefa é válido
+        if (numeroTarefa >= 0 && numeroTarefa < qtdTarefas) {
+            printf("Digite o nome da tarefa: ");
+            fgets(tarefas[numeroTarefa].nome, sizeof(tarefas[numeroTarefa].nome), stdin);
+            tarefas[numeroTarefa].nome[strcspn(tarefas[numeroTarefa].nome, "\n")] = '\0';
+
+            printf("Digite o nome do responsável: ");
+            fgets(tarefas[numeroTarefa].responsavel, sizeof(tarefas[numeroTarefa].responsavel), stdin);
+            tarefas[numeroTarefa].responsavel[strcspn(tarefas[numeroTarefa].responsavel, "\n")] = '\0';
+
+            printf("Digite o progresso atual [%%]: ");
+            scanf("%d", &tarefas[numeroTarefa].progresso);
+            limpaBuffer();
+
+            // Verificar se o responsável é um integrante válido
+            int responsavelID = -1;
+            for (int i = 0; i < qtdIntegrantes; i++) {
+                if (strcmp(pessoa[i].nome, tarefas[numeroTarefa].responsavel) == 0) {
+                    responsavelID = i;
+                    break;
+                }
+            }
+
+            if (responsavelID == -1) {
+                printf("Integrante não encontrado, digite outro.\n");
+            } else {
+                printf("Tarefa editada com sucesso.\n");
+            }
+        } else {
+            printf("Número de tarefa inválido.\n");
+        }
+
+        limpaTela();
+    }
+
         // FUNÇÃO 8: Visualizar andamento do projeto
-        if (opcao == 8) {
+        if (opcao == VISUALIZAR_ANDAMENTO_PROJETO) {
             printf("Visualizar Andamento do Projeto:\n\n");
-            printf("Numero   |     Nome da Tarefa              |     Responsavel         |     Progresso\n");
+            printf("Numero   |     Nome da Tarefa              |     Responsavel          |     Progresso\n");
             adicionaQuebra();
             for (int tarefa = 0; tarefa < qtdTarefas; tarefa++) {
                 if (strcmp(tarefas[tarefa].nome, valorNulo) != 0) {
@@ -281,7 +358,9 @@ int main() {
 }
 
 void limpaBuffer() {
-    while (getchar() != '\n');
+    // while (getchar() != '\n');
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
 }
 
 void limpaTela() {
