@@ -19,6 +19,7 @@ typedef struct {
     int id;
     char nome[MAXIMO];
     char funcao[MAXIMO];
+    int removido;
 } Pessoa;
 
 enum OpcoesMenu {
@@ -141,22 +142,21 @@ int main() {
                 // Validar a entrada para idExclusao verificando se scanf retorna 1 (indica que um inteiro foi lido com sucesso)
                 printf("Digite o numero do integrante a ser removido: ");
                 if (scanf("%d", &idExclusao) != 1) {
-                    printf("Entrada inválida. Digite um número válido.\n");
+                    printf("Entrada invalida. Digite um numero valido.\n");
                     limpaBuffer();
                     continue;
                 }
 
                 // Verificar se idExclusao está dentro do intervalo válido de integrantes (0 a qtdIntegrantes - 1). 
                 if (idExclusao < 0 || idExclusao >= qtdIntegrantes) {
-                    printf("Integrante não encontrado. Digite um número válido.\n");
+                    printf("Integrante nao encontrado. Digite um numero valido.\n");
                     limpaBuffer();
                     continue;
                 }   
 
                 for(integrante = 0; integrante < qtdIntegrantes; integrante++){
                     if(idExclusao == pessoa[integrante].id){
-                        strcpy(pessoa[integrante].nome, valorNulo);
-                        strcpy(pessoa[integrante].funcao, valorNulo);
+                        pessoa[integrante].removido = 1;
                     }
                 }
                 
@@ -164,7 +164,7 @@ int main() {
                 printf("Integrante Removido. Deseja remover mais algum? 1-Sim 2-Nao\n");
                 if (scanf("%d", &sOuN) != 1) {
                     // Ao pedir ao usuário para escolher, validar novamente a entrada para garantir que seja ou 1 ou 2
-                    printf("Entrada inválida. Digite 1 para continuar ou 2 para sair.\n");
+                    printf("Entrada invalida. Digite 1 para continuar ou 2 para sair.\n");
                     limpaBuffer();
                     continue;
                 }
@@ -177,11 +177,14 @@ int main() {
             adicionaQuebra();
             //printf("Quantidade de integrantes: %d\n", qtdIntegrantes); // DEBUG
 
+            int novoID = 0;
             printf("Numero   |     Nome              |          Funcao\n");
             for (int integrante = 0; integrante < qtdIntegrantes; integrante++) {
-                if (strcmp(pessoa[integrante].nome, valorNulo) != 0) {
-                    printf("%-7d  |  %-19s  |  %-23s\n", pessoa[integrante].id, pessoa[integrante].nome, pessoa[integrante].funcao);  
-                }          
+                if (!pessoa[integrante].removido) {
+                    pessoa[integrante].id = novoID;
+                    printf("%-7d  |  %-19s  |  %-23s\n", pessoa[integrante].id, pessoa[integrante].nome, pessoa[integrante].funcao);    
+                    novoID++;        
+                }
             }
 
             // Voltar para o menu principal
@@ -210,19 +213,19 @@ int main() {
 
                         int responsavelID = -1;
                         for (int i = 0; i < qtdIntegrantes; i++) {
-                            if (strcmp(pessoa[i].nome, tarefas[qtdTarefas].responsavel) == 0) {
+                            if (strcmp(pessoa[i].nome, tarefas[qtdTarefas].responsavel) == 0 && !pessoa[i].removido) {
                                 responsavelID = i;
                                 break;
                             }
                         }
                         
-                        // Responsável não foi encontrando
+                        // Responsável não foi encontrando ou foi removido
                         if (responsavelID == -1) {
                             printf("Integrante nao encontrado, digite outro responsavel.\n");
                             
                             sOuN = 0;
                             // Perguntar se o usuário quer adicionar outra tarefa
-                            printf("Deseja tentar novamente? 1-Sim 2-Não\n");
+                            printf("Deseja tentar novamente? 1-Sim 2-Nao\n");
                             scanf("%d", &sOuN);
                             limpaBuffer();
 
@@ -248,7 +251,7 @@ int main() {
 
                     sOuN = 0;
                     // Perguntar se o usuário quer adicionar outra tarefa
-                    printf("Deseja adicionar outra tarefa? 1-Sim 2-Não\n");
+                    printf("Deseja adicionar outra tarefa? 1-Sim 2-Nao\n");
                     scanf("%d", &sOuN);
                     limpaBuffer();
 
@@ -258,7 +261,7 @@ int main() {
                     }
                 }
                 else {
-                    printf("Limite máximo de tarefas atingido.\n");
+                    printf("Limite maximo de tarefas atingido.\n");
                     break;
                 }
             }
@@ -267,7 +270,7 @@ int main() {
     // FUNÇÃO 6: Remover tarefa
     if (opcao == REMOVER_TAREFA) {
         int numeroTarefa;
-        printf("Digite o número da tarefa que deseja remover: ");
+        printf("Digite o numero da tarefa que deseja remover: ");
         scanf("%d", &numeroTarefa);
         limpaBuffer();
 
@@ -282,7 +285,7 @@ int main() {
 
             printf("Tarefa removida com sucesso.\n");
         } else {
-            printf("Número de tarefa inválido.\n");
+            printf("Numero de tarefa invalido.\n");
         }
 
         limpaTela();
@@ -291,7 +294,7 @@ int main() {
     // FUNÇÃO 7: Editar tarefa
     if (opcao == EDITAR_TAREFA) {
         int numeroTarefa;
-        printf("Digite o número da tarefa que deseja editar: ");
+        printf("Digite o numero da tarefa que deseja editar: ");
         scanf("%d", &numeroTarefa);
         limpaBuffer();
 
@@ -301,7 +304,7 @@ int main() {
             fgets(tarefas[numeroTarefa].nome, sizeof(tarefas[numeroTarefa].nome), stdin);
             tarefas[numeroTarefa].nome[strcspn(tarefas[numeroTarefa].nome, "\n")] = '\0';
 
-            printf("Digite o nome do responsável: ");
+            printf("Digite o nome do responsavel: ");
             fgets(tarefas[numeroTarefa].responsavel, sizeof(tarefas[numeroTarefa].responsavel), stdin);
             tarefas[numeroTarefa].responsavel[strcspn(tarefas[numeroTarefa].responsavel, "\n")] = '\0';
 
@@ -319,12 +322,12 @@ int main() {
             }
 
             if (responsavelID == -1) {
-                printf("Integrante não encontrado, digite outro.\n");
+                printf("Integrante nao encontrado, digite outro.\n");
             } else {
                 printf("Tarefa editada com sucesso.\n");
             }
         } else {
-            printf("Número de tarefa inválido.\n");
+            printf("Numero de tarefa invalido.\n");
         }
 
         limpaTela();
